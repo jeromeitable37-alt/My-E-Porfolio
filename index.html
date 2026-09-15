@@ -184,7 +184,10 @@
       </div>
 
 
-      <div class="hero-profile reveal delay" id="heroProfile">
+      <div
+        class="hero-profile reveal delay"
+        id="heroProfile"
+      >
 
         <div
           class="profile-orbit"
@@ -312,7 +315,6 @@
       </p>
 
 
-      <!-- FILTER -->
       <div class="filter-row reveal">
 
         <button
@@ -1446,7 +1448,6 @@
         </a>
 
 
-
         <a
           class="link-card reveal"
           href="https://www.youtube.com/watch?v=F9FNL8xS644"
@@ -1480,7 +1481,7 @@
 
     <!-- =========================
          CONTACT
-         CLEAN VERSION
+         FORM ONLY
     ========================== -->
     <section class="section contact" id="contact">
 
@@ -1504,85 +1505,122 @@
       </div>
 
 
-      <div class="contact-clean reveal">
+      <div class="contact-form-only-wrap reveal">
 
+        <div class="contact-form-card">
 
-        <!-- CONTACT INTRO -->
-        <div class="contact-intro">
-
-          <span class="contact-small">
-            CONTACT ME
-          </span>
-
-          <h3>
-            Have something to say?
-            <br>
-            <em>I'd love to hear from you.</em>
-          </h3>
-
-          <p>
-            Thank you for visiting my IC ePortfolio. You can reach me
-            through my email for questions, feedback, or anything you'd
-            like to share.
-          </p>
-
-        </div>
-
-
-
-        <!-- EMAIL CARD -->
-        <div class="contact-main-card">
-
-          <div class="contact-mail-icon">
-            ✉
-          </div>
-
-
-          <div class="contact-mail-info">
-
-            <span>
-              MY EMAIL
-            </span>
-
-            <a href="mailto:jeromeitable.37@gmail.com">
-              jeromeitable.37@gmail.com
-            </a>
-
-          </div>
-
-
-          <button
-            class="copy-btn"
-            id="copyEmail"
-            type="button"
+          <form
+            id="contactForm"
+            action="https://formsubmit.co/jeromeitable.37@gmail.com"
+            method="POST"
           >
-            Copy email
-          </button>
+
+            <!-- FormSubmit configuration -->
+            <input
+              type="hidden"
+              name="_subject"
+              value="New message from Jerome's IC E-Portfolio"
+            >
+
+            <input
+              type="hidden"
+              name="_template"
+              value="table"
+            >
+
+            <input
+              type="hidden"
+              name="_captcha"
+              value="false"
+            >
+
+
+            <div class="form-top">
+
+              <span class="contact-label">
+                SEND A MESSAGE
+              </span>
+
+              <span>
+                Send me a message through this form
+              </span>
+
+            </div>
+
+
+            <!-- NAME -->
+            <label for="contactName">
+
+              Name
+
+              <input
+                id="contactName"
+                name="name"
+                type="text"
+                placeholder="Your name"
+                autocomplete="name"
+                required
+              >
+
+            </label>
+
+
+            <!-- EMAIL -->
+            <label for="contactEmail">
+
+              Email
+
+              <input
+                id="contactEmail"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              >
+
+            </label>
+
+
+            <!-- MESSAGE -->
+            <label for="contactMessage">
+
+              Message
+
+              <textarea
+                id="contactMessage"
+                name="message"
+                rows="6"
+                placeholder="Write your message here..."
+                required
+              ></textarea>
+
+            </label>
+
+
+            <!-- SEND BUTTON -->
+            <button
+              class="btn primary full"
+              id="sendMessage"
+              type="submit"
+            >
+
+              Send message
+
+              <span>→</span>
+
+            </button>
+
+
+            <p
+              class="contact-note"
+              id="contactFormStatus"
+              aria-live="polite"
+            ></p>
+
+          </form>
 
         </div>
-
-
-
-        <!-- CONTACT ACTION -->
-        <div class="contact-actions">
-
-          <a
-            class="btn primary"
-            href="mailto:jeromeitable.37@gmail.com?subject=Message%20from%20your%20IC%20Portfolio"
-          >
-            Send me an email
-            <span>↗</span>
-          </a>
-
-        </div>
-
-
-        <!-- COPY STATUS -->
-        <p
-          class="contact-note"
-          id="copyStatus"
-          aria-live="polite"
-        ></p>
 
       </div>
 
