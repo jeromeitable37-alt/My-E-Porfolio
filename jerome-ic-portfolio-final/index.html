@@ -256,13 +256,21 @@
           <p class="contact-note" id="copyStatus" aria-live="polite"></p>
         </div>
         <div class="contact-form-card reveal delay">
-          <div class="form-top">
-            <span class="contact-label">QUICK MESSAGE</span>
-            <span>Opens your email app</span>
-          </div>
-          <label>Name<input id="contactName" type="text" placeholder="Your name"></label>
-          <label>Message<textarea id="contactMessage" rows="5" placeholder="Write your message here..."></textarea></label>
-          <button class="btn primary full" id="sendMessage" type="button">Start email <span>→</span></button>
+          <form id="contactForm" action="https://formsubmit.co/jeromeitable.37@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New message from Jerome's IC E-Portfolio">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_autoresponse" value="Thanks for contacting Jerome. Your message was received.">
+            <div class="form-top">
+              <span class="contact-label">SEND A MESSAGE</span>
+              <span>Delivered to Jerome's email</span>
+            </div>
+            <label>Name<input id="contactName" name="name" type="text" placeholder="Your name" autocomplete="name" required></label>
+            <label>Email<input id="contactEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required></label>
+            <label>Message<textarea id="contactMessage" name="message" rows="5" placeholder="Write your message here..." required></textarea></label>
+            <button class="btn primary full" id="sendMessage" type="submit">Send message <span>→</span></button>
+            <p class="contact-note" id="contactFormStatus" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>

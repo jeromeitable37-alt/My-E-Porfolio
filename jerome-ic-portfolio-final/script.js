@@ -152,6 +152,8 @@ async function copyEmailAddress(){
 }
 document.getElementById('copyEmail')?.addEventListener('click', copyEmailAddress);
 document.getElementById('copyEmailBottom')?.addEventListener('click', copyEmailAddress);
+
+// Direct contact form submission via FormSubmit
 const contactForm = document.getElementById('contactForm');
 const contactFormStatus = document.getElementById('contactFormStatus');
 contactForm?.addEventListener('submit', async (event)=>{
@@ -162,21 +164,30 @@ contactForm?.addEventListener('submit', async (event)=>{
   submitButton.innerHTML = 'Sending... <span>↗</span>';
   if(contactFormStatus) contactFormStatus.textContent = 'Sending your message...';
 
-  try{
-    const response = await fetch(contactForm.action.replace('/jeromeitable.37@gmail.com','/ajax/jeromeitable.37@gmail.com'), {
+  try {
+    const response = await fetch(contactForm.action, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+      headers: {
+        'Accept': 'application/json'
+      },
+      body: new FormData(contactForm)
     });
-    const data = await response.json().catch(()=>({success:false}));
-    if(!response.ok || data.success === false){
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok || data.success === false) {
       throw new Error(data.message || 'Unable to send message.');
     }
     contactForm.reset();
-    if(contactFormStatus) contactFormStatus.textContent = 'Message sent. Thanks for reaching out!';
-  }catch(error){
-    if(contactFormStatus) contactFormStatus.textContent = 'Could not send automatically. Please use the Email Me button instead.';
-  }finally{
+    if(contactFormStatus) contactFormStatus.textContent = 'Message sent successfully. Thanks for reaching out!';
+  } catch(error) {
+    // Reliable fallback: open a pre-filled email if the form service is blocked.
+    const name = document.getElementById('contactName')?.value.trim() || '';
+    const email = document.getElementById('contactEmail')?.value.trim() || '';
+    const message = document.getElementById('contactMessage')?.value.trim() || '';
+    const subject = 'Message from your IC E-Portfolio';
+    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+    window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if(contactFormStatus) contactFormStatus.textContent = 'Opening your email app as a backup...';
+  } finally {
     submitButton.disabled = false;
     submitButton.innerHTML = 'Send message <span>→</span>';
   }
