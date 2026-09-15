@@ -17,3 +17,7 @@ A dark-first, responsive personal ePortfolio for Institutional Course 3 (Intrape
 1. Put this folder in a GitHub repository.
 2. Import the repository into Vercel.
 3. Keep the project as a static site; no build command is required.
+
+
+## Contact form
+The contact form uses FormSubmit's AJAX endpoint to send messages to jeromeitable.37@gmail.com without opening the visitor's email app. On first use, FormSubmit sends an activation email to the destination address; the form must be confirmed before live messages are forwarded.

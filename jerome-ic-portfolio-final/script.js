@@ -152,10 +152,32 @@ async function copyEmailAddress(){
 }
 document.getElementById('copyEmail')?.addEventListener('click', copyEmailAddress);
 document.getElementById('copyEmailBottom')?.addEventListener('click', copyEmailAddress);
-document.getElementById('sendMessage')?.addEventListener('click', ()=>{
-  const name = document.getElementById('contactName')?.value.trim() || '';
-  const message = document.getElementById('contactMessage')?.value.trim() || '';
-  const subject = name ? `Message from ${name} — IC Portfolio` : 'Message from my IC Portfolio';
-  const body = message ? `${name ? `Hi Jerome,\n\n` : ''}${message}` : (name ? `Hi Jerome,\n\nMy name is ${name}. I wanted to reach out through your IC portfolio.` : 'Hi Jerome,\n\nI wanted to reach out through your IC portfolio.');
-  window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const contactForm = document.getElementById('contactForm');
+const contactFormStatus = document.getElementById('contactFormStatus');
+contactForm?.addEventListener('submit', async (event)=>{
+  event.preventDefault();
+  const submitButton = document.getElementById('sendMessage');
+  if(!submitButton) return;
+  submitButton.disabled = true;
+  submitButton.innerHTML = 'Sending... <span>↗</span>';
+  if(contactFormStatus) contactFormStatus.textContent = 'Sending your message...';
+
+  try{
+    const response = await fetch(contactForm.action.replace('/jeromeitable.37@gmail.com','/ajax/jeromeitable.37@gmail.com'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+    });
+    const data = await response.json().catch(()=>({success:false}));
+    if(!response.ok || data.success === false){
+      throw new Error(data.message || 'Unable to send message.');
+    }
+    contactForm.reset();
+    if(contactFormStatus) contactFormStatus.textContent = 'Message sent. Thanks for reaching out!';
+  }catch(error){
+    if(contactFormStatus) contactFormStatus.textContent = 'Could not send automatically. Please use the Email Me button instead.';
+  }finally{
+    submitButton.disabled = false;
+    submitButton.innerHTML = 'Send message <span>→</span>';
+  }
 });
