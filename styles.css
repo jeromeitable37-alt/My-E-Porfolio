@@ -2504,19 +2504,23 @@ body::after {
 ========================================================= */
 
 .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Enable the reveal animation only after JavaScript is ready.
+   This prevents the whole page from appearing blank if script.js
+   does not initialize correctly. */
+html.js-ready .reveal {
   opacity: 0;
-
-  transform:
-    translateY(18px);
-
+  transform: translateY(18px);
   transition:
     opacity .75s ease,
     transform .75s ease;
 }
 
-.reveal.visible {
+html.js-ready .reveal.visible {
   opacity: 1;
-
   transform: none;
 }
 
