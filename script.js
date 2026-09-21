@@ -79,6 +79,8 @@ if (heroProfile && window.matchMedia('(pointer:fine)').matches && !window.matchM
 }
 
 const media = {
+  activity11: { img: 'assets/activity-1-1.jpg', k: 'ACTIVITY NO. 1.1', t: 'Emotional Quotient Reflection', d: 'A reflection about the traits I see in myself, how EQ helps me deal with challenges and relationships, and the areas I still want to improve.' },
+  activity3: { img: 'assets/activity-no-3.jpg', k: 'ACTIVITY NO. 3', t: 'Emotional Self-Awareness', d: 'A self-reflection worksheet about emotions I experience, qualities that help me succeed, skills I need to improve, and how I respond when stressed.' },
   ei: { img: 'assets/434cb2b3-b1fe-479f-8aa1-fc5efa22acee.png', k: 'IC2 • EI SELF-EVALUATION 3', t: 'Emotional Intelligence', d: 'I used this activity to look at how I deal with emotions, pressure, and difficult situations.' },
   self: { img: 'assets/c878a0e1-407a-40b7-9fa9-ee444e7a4682.png', k: 'ACTIVITY NO. 4', t: 'Self-Management Plan', d: 'This is where I wrote about my reactions, the emotions I usually feel, and what I can do to respond better.' },
   kind: { img: 'assets/a13056d2-4636-4b8b-b042-9e33dff37318.png', k: '6-WEEK ACTIVITY', t: 'Random Acts of Kindness', d: 'My six-week list includes simple things like greeting people, helping others, returning borrowed things, and keeping shared spaces clean.' },
