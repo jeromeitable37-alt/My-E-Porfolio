@@ -1534,6 +1534,13 @@
               value="false"
             >
 
+            <input
+              type="hidden"
+              name="_replyto"
+              value=""
+              id="replyToField"
+            >
+
 
             <div class="form-top">
 
@@ -1731,6 +1738,18 @@
   <!-- =========================
        JAVASCRIPT
   ========================== -->
+  <script>
+    const contactForm = document.getElementById("contactForm");
+    const contactEmail = document.getElementById("contactEmail");
+    const replyToField = document.getElementById("replyToField");
+
+    if (contactForm && contactEmail && replyToField) {
+      contactForm.addEventListener("submit", function () {
+        replyToField.value = contactEmail.value.trim();
+      });
+    }
+  </script>
+
   <script src="script.js"></script>
 
 </body>
