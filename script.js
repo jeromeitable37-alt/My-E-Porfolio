@@ -1,4 +1,7 @@
 const body = document.body;
+
+// Mark the page as JS-ready so reveal animations can safely run.
+document.documentElement.classList.add('js-ready');
 const menuBtn = document.getElementById('menuBtn');
 const siteNav = document.getElementById('siteNav');
 const themeBtn = document.getElementById('themeBtn');
