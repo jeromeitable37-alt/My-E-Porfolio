@@ -2926,3 +2926,115 @@ html.js-ready .reveal.visible {
   }
 
 }
+
+/* =========================================================
+   DOCUMENT ACTIVITY COVERS
+   Stylized covers for new Google Docs-linked activities
+========================================================= */
+
+.work-image.activity-cover {
+  position: relative;
+  isolation: isolate;
+  min-height: 230px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  color: #fff;
+  overflow: hidden;
+  background: #130d20;
+}
+
+.work-image.activity-cover::before,
+.work-image.activity-cover::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.work-image.activity-cover::before {
+  inset: 0;
+  opacity: .95;
+}
+
+.work-image.activity-cover::after {
+  width: 230px;
+  height: 230px;
+  right: -72px;
+  bottom: -105px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 20px rgba(255,255,255,.035),
+    0 0 0 44px rgba(255,255,255,.025);
+}
+
+.activity-cover-communication::before {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(115,230,255,.32), transparent 35%),
+    linear-gradient(135deg, #21123e 0%, #4a247b 56%, #151123 100%);
+}
+
+.activity-cover-stress::before {
+  background:
+    radial-gradient(circle at 15% 90%, rgba(255,190,112,.24), transparent 38%),
+    linear-gradient(135deg, #26152b 0%, #69385c 52%, #19101f 100%);
+}
+
+.activity-cover-empathy::before {
+  background:
+    radial-gradient(circle at 85% 18%, rgba(135,237,208,.28), transparent 35%),
+    linear-gradient(135deg, #102d33 0%, #24605c 54%, #101c2b 100%);
+}
+
+.activity-cover-kicker,
+.activity-cover small {
+  display: block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  line-height: 1.5;
+  color: rgba(255,255,255,.78);
+}
+
+.activity-cover strong {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(29px, 3vw, 39px);
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: .98;
+  color: #fff;
+}
+
+.activity-cover small {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,.24);
+  width: 100%;
+}
+
+.activity-document-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.activity-document-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+@media (max-width: 620px) {
+  .work-image.activity-cover {
+    min-height: 205px;
+  }
+
+  .activity-cover strong {
+    font-size: 34px;
+  }
+}
