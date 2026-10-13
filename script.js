@@ -120,6 +120,27 @@ document.querySelectorAll('[data-modal]').forEach(card => {
     openMedia(card.dataset.modal);
   });
 });
+// CLICKABLE DOCUMENT CARD HANDLERS
+document.querySelectorAll('.work-card[data-document-url]').forEach(card => {
+  const openDocument = () => {
+    const url = card.dataset.documentUrl;
+    if (url) window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  card.addEventListener('click', event => {
+    // Preserve the visible "Open activity" link's normal navigation.
+    if (event.target.closest('a, button')) return;
+    openDocument();
+  });
+
+  card.addEventListener('keydown', event => {
+    if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a, button')) {
+      event.preventDefault();
+      openDocument();
+    }
+  });
+});
+
 document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeMedia));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMedia(); });
 
