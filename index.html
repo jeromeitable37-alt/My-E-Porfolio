@@ -1902,17 +1902,7 @@
   <!-- =========================
        JAVASCRIPT
   ========================== -->
-  <script>
-    const contactForm = document.getElementById("contactForm");
-    const contactEmail = document.getElementById("contactEmail");
-    const replyToField = document.getElementById("replyToField");
-
-    if (contactForm && contactEmail && replyToField) {
-      contactForm.addEventListener("submit", function () {
-        replyToField.value = contactEmail.value.trim();
-      });
-    }
-  </script>
+  <!-- Contact form setup is handled by script.js to avoid duplicate global declarations. -->
 
   <script src="script.js"></script>
 
