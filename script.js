@@ -115,7 +115,8 @@ function closeMedia() {
 
 document.querySelectorAll('[data-modal]').forEach(card => {
   card.addEventListener('click', e => {
-    if (e.target.closest('button')) return;
+    // Let nested links navigate normally; preview buttons and the rest of the card open the image.
+    if (e.target.closest('a')) return;
     openMedia(card.dataset.modal);
   });
 });
