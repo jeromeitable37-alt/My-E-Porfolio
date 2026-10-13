@@ -3038,3 +3038,113 @@ html.js-ready .reveal.visible {
     font-size: 34px;
   }
 }
+
+
+/* =========================================================
+   UNIFIED IC WORK CARD LAYOUT
+   Keep older activities consistent with the three portfolio artifacts.
+========================================================= */
+
+.work-card {
+  min-width: 0;
+}
+
+.work-card:not([data-modal]) {
+  cursor: default;
+}
+
+.work-card[data-modal] {
+  cursor: pointer;
+}
+
+/* Use the same vertical card layout for all activities. */
+.work-card.featured {
+  grid-column: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.work-card .work-image,
+.work-card.featured .work-image {
+  width: 100%;
+  height: 230px;
+  min-height: 230px;
+  flex: 0 0 230px;
+}
+
+.work-card .work-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+}
+
+.work-card .work-image.document {
+  padding: 12px;
+}
+
+.work-card .work-image.document img {
+  object-fit: contain;
+}
+
+.work-card .work-image.graphic img {
+  object-fit: cover;
+}
+
+.work-card .work-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.work-card .work-body p {
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+.work-card .work-body .text-btn {
+  margin-top: auto;
+  padding-top: 15px;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.work-card .work-body .activity-document-link {
+  margin-top: auto;
+}
+
+.work-image.activity-cover small {
+  font-size: 7px;
+  letter-spacing: .12em;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 620px) {
+  .work-card .work-image,
+  .work-card.featured .work-image {
+    height: 210px;
+    min-height: 210px;
+    flex-basis: 210px;
+  }
+
+  .work-card .work-body {
+    padding: 18px;
+  }
+
+  .work-card .work-body h3 {
+    font-size: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  .work-image.activity-cover strong {
+    font-size: clamp(27px, 8vw, 34px);
+  }
+
+  .work-image.activity-cover small {
+    font-size: 6.5px;
+    letter-spacing: .09em;
+  }
+}
