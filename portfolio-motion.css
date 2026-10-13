@@ -1,0 +1,361 @@
+/* Jerome Itable IC Portfolio — cinematic motion layer
+   CSS-only enhancement. Does not replace existing styles or JS interactions.
+*/
+
+:root {
+  --motion-ease: cubic-bezier(.2,.75,.25,1);
+  --motion-glow-purple: rgba(168,120,255,.24);
+  --motion-glow-cyan: rgba(115,230,255,.16);
+}
+
+/* Ambient background movement — subtle rather than flashing. */
+body::before {
+  background-size: 120% 120%;
+  animation: portfolioAuroraDrift 30s ease-in-out infinite alternate;
+}
+
+body::after {
+  animation: portfolioGridDrift 52s linear infinite;
+}
+
+@keyframes portfolioAuroraDrift {
+  0% { background-position: 0% 0%, 100% 15%, 50% 100%; }
+  100% { background-position: 14% 20%, 82% 0%, 44% 82%; }
+}
+
+@keyframes portfolioGridDrift {
+  from { background-position: 0 0; }
+  to { background-position: 42px 42px; }
+}
+
+/* Cinematic hero: shifting light, animated headline gradient, staggered entrance. */
+.hero::before {
+  animation: heroPurplePulse 13s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.hero::after {
+  animation: heroCyanPulse 16s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes heroPurplePulse {
+  0% { transform: translate3d(0,0,0) scale(.96); opacity: .62; }
+  100% { transform: translate3d(28px,-18px,0) scale(1.08); opacity: 1; }
+}
+
+@keyframes heroCyanPulse {
+  0% { transform: translate3d(0,0,0) scale(.94); opacity: .56; }
+  100% { transform: translate3d(-20px,14px,0) scale(1.09); opacity: .9; }
+}
+
+.hero h1 span {
+  background-size: 220% 220%;
+  animation: heroTitleShimmer 11s ease-in-out infinite alternate;
+}
+
+@keyframes heroTitleShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+html.js-ready .hero-copy.visible .kicker,
+html.js-ready .hero-copy.visible .hello,
+html.js-ready .hero-copy.visible h1,
+html.js-ready .hero-copy.visible .hero-intro,
+html.js-ready .hero-copy.visible .hero-actions,
+html.js-ready .hero-copy.visible .hero-mini,
+html.js-ready .hero-copy.visible .scroll-cue {
+  animation: heroContentArrive .75s var(--motion-ease) both;
+}
+
+html.js-ready .hero-copy.visible .kicker { animation-delay: .04s; }
+html.js-ready .hero-copy.visible .hello { animation-delay: .10s; }
+html.js-ready .hero-copy.visible h1 { animation-delay: .16s; }
+html.js-ready .hero-copy.visible .hero-intro { animation-delay: .23s; }
+html.js-ready .hero-copy.visible .hero-actions { animation-delay: .30s; }
+html.js-ready .hero-copy.visible .hero-mini { animation-delay: .37s; }
+html.js-ready .hero-copy.visible .scroll-cue { animation-delay: .44s; }
+
+@keyframes heroContentArrive {
+  from { opacity: 0; transform: translateY(15px); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Portrait frame and badge get a quiet living-glass effect. */
+.profile-frame {
+  animation: profileGlowBreathe 8s ease-in-out infinite;
+  transition: box-shadow .45s var(--motion-ease), border-color .35s ease;
+}
+
+.profile-frame img {
+  transition: transform .9s var(--motion-ease), filter .7s ease;
+}
+
+.hero-profile:hover .profile-frame {
+  border-color: rgba(115,230,255,.38);
+  box-shadow: var(--shadow), 0 0 55px var(--motion-glow-purple), 0 0 32px var(--motion-glow-cyan);
+}
+
+.hero-profile:hover .profile-frame img {
+  transform: scale(1.025);
+  filter: saturate(1.06);
+}
+
+.profile-caption {
+  animation: profileCaptionFloat 6.5s ease-in-out infinite;
+}
+
+@keyframes profileGlowBreathe {
+  0%,100% { box-shadow: var(--shadow), 0 0 30px rgba(168,120,255,.12); }
+  50% { box-shadow: var(--shadow), 0 0 46px rgba(168,120,255,.22), 0 0 24px rgba(115,230,255,.07); }
+}
+
+@keyframes profileCaptionFloat {
+  0%,100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+
+/* Glass navigation and clearer active state. */
+.topbar {
+  animation: navGlideIn .7s var(--motion-ease) both;
+  transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.topbar:hover {
+  border-color: rgba(216,180,255,.28);
+  box-shadow: 0 14px 48px rgba(0,0,0,.3), 0 0 28px rgba(168,120,255,.06);
+}
+
+.topbar nav a {
+  position: relative;
+  isolation: isolate;
+  transition: color .25s ease, background .25s ease, transform .25s var(--motion-ease);
+}
+
+.topbar nav a::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 4px;
+  height: 1px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--purple2), var(--cyan));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .28s var(--motion-ease);
+  pointer-events: none;
+}
+
+.topbar nav a:hover::after,
+.topbar nav a.active::after { transform: scaleX(1); }
+
+.topbar nav a:hover { transform: translateY(-1px); }
+
+@keyframes navGlideIn {
+  from { opacity: 0; translate: 0 -10px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+/* Cards: more depth and responsive light response on hover/focus. */
+.work-card,
+.achievement-card,
+.link-card {
+  transition:
+    transform .34s var(--motion-ease),
+    box-shadow .34s ease,
+    border-color .34s ease,
+    background .34s ease;
+  transform-origin: center bottom;
+}
+
+.work-card:hover,
+.work-card:focus-within {
+  transform: translateY(-7px);
+  border-color: rgba(168,120,255,.42);
+  box-shadow:
+    0 23px 58px rgba(0,0,0,.26),
+    0 0 0 1px rgba(168,120,255,.05),
+    0 0 30px rgba(168,120,255,.09);
+}
+
+.achievement-card:hover,
+.achievement-card:focus-within,
+.link-card:hover,
+.link-card:focus-within {
+  transform: translateY(-6px);
+  border-color: rgba(115,230,255,.28);
+  box-shadow: 0 22px 55px rgba(0,0,0,.24), 0 0 26px rgba(115,230,255,.07);
+}
+
+.work-image img,
+.achievement-img img,
+.gallery-photo img,
+.school-events-strip .memory img {
+  transition: transform .65s var(--motion-ease), filter .55s ease;
+  will-change: transform;
+}
+
+.work-card:hover .work-image img,
+.work-card:focus-within .work-image img,
+.achievement-card:hover .achievement-img img,
+.gallery-photo:hover img,
+.gallery-photo:focus-visible img,
+.school-events-strip .memory:hover img {
+  transform: scale(1.045);
+  filter: saturate(1.08) contrast(1.025);
+}
+
+/* Activity cover cards get a very slow moving color wash. */
+.work-image.activity-cover::before {
+  background-size: 150% 150%;
+  animation: coverLightDrift 16s ease-in-out infinite alternate;
+}
+
+.work-image.activity-cover::after {
+  animation: coverRingDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes coverLightDrift {
+  0% { background-position: 0% 45%; }
+  100% { background-position: 100% 55%; }
+}
+
+@keyframes coverRingDrift {
+  0% { transform: translate3d(0,0,0) scale(.96); opacity: .62; }
+  100% { transform: translate3d(-12px,-10px,0) scale(1.06); opacity: 1; }
+}
+
+/* Buttons feel responsive, not bouncy. */
+.btn,
+.icon-btn,
+.menu-btn,
+.filter-btn,
+.utility-chip,
+.activity-quickview,
+.favorite-btn,
+.share-activity-btn,
+.timeline-open-btn,
+.gallery-modal-controls button {
+  transition:
+    transform .22s var(--motion-ease),
+    box-shadow .25s ease,
+    border-color .25s ease,
+    background .25s ease,
+    color .25s ease;
+}
+
+.btn:active,
+.icon-btn:active,
+.menu-btn:active,
+.filter-btn:active,
+.utility-chip:active,
+.activity-quickview:active,
+.favorite-btn:active,
+.share-activity-btn:active,
+.timeline-open-btn:active,
+.gallery-modal-controls button:active {
+  transform: translateY(1px) scale(.985);
+}
+
+.btn.primary {
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+}
+
+.btn.primary:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 15px 36px rgba(126,76,255,.3), 0 0 22px rgba(168,120,255,.13);
+}
+
+/* The new dashboard, explorer, timeline and skill cards feel like one system. */
+.dashboard-metric,
+.timeline-item,
+.skills-map-card,
+.activity-detail-panel,
+.portfolio-qr-panel {
+  transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.dashboard-metric:hover {
+  border-color: rgba(168,120,255,.32);
+  box-shadow: 0 10px 28px rgba(168,120,255,.07);
+}
+
+.timeline-item:hover {
+  border-color: rgba(115,230,255,.26);
+  background: rgba(115,230,255,.025);
+}
+
+.skills-map-card:hover,
+.skills-map-card:focus-visible {
+  box-shadow: 0 16px 35px rgba(168,120,255,.09);
+}
+
+/* Modal panels enter with a short cinematic settle; no impact on opening logic. */
+.modal.open .modal-panel {
+  animation: modalSettleIn .32s var(--motion-ease) both;
+}
+
+.activity-detail-modal.open .activity-detail-panel,
+.portfolio-qr-modal.open .portfolio-qr-panel {
+  animation: modalSettleIn .36s var(--motion-ease) both;
+}
+
+@keyframes modalSettleIn {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Smooth feedback for progress and saved/favorite controls. */
+.top-progress span {
+  transition: width .08s linear;
+}
+
+.favorite-btn[aria-pressed="true"] {
+  box-shadow: 0 0 20px rgba(255,217,141,.08);
+}
+
+/* Avoid extra motion when a visitor requests reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .hero::before,
+  .hero::after,
+  .hero h1 span,
+  .profile-frame,
+  .profile-caption,
+  .topbar,
+  .work-image.activity-cover::before,
+  .work-image.activity-cover::after,
+  .modal.open .modal-panel,
+  .activity-detail-modal.open .activity-detail-panel,
+  .portfolio-qr-modal.open .portfolio-qr-panel {
+    animation: none !important;
+  }
+
+  .hero-profile:hover .profile-frame img,
+  .work-card:hover,
+  .work-card:focus-within,
+  .achievement-card:hover,
+  .achievement-card:focus-within,
+  .link-card:hover,
+  .link-card:focus-within,
+  .work-card:hover .work-image img,
+  .achievement-card:hover .achievement-img img,
+  .gallery-photo:hover img,
+  .school-events-strip .memory:hover img {
+    transform: none !important;
+  }
+
+  html.js-ready .hero-copy.visible .kicker,
+  html.js-ready .hero-copy.visible .hello,
+  html.js-ready .hero-copy.visible h1,
+  html.js-ready .hero-copy.visible .hero-intro,
+  html.js-ready .hero-copy.visible .hero-actions,
+  html.js-ready .hero-copy.visible .hero-mini,
+  html.js-ready .hero-copy.visible .scroll-cue {
+    animation: none !important;
+  }
+}
