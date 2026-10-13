@@ -3148,3 +3148,14 @@ html.js-ready .reveal.visible {
     letter-spacing: .09em;
   }
 }
+
+
+/* Metadata for the Stress & Emotional Management Plan */
+.work-body .activity-meta {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: .01em;
+}
