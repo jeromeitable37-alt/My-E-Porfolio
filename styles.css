@@ -3178,3 +3178,76 @@ html.js-ready .reveal.visible {
 .work-card[data-document-url] .activity-cover {
   cursor: pointer;
 }
+
+
+/* =========================================================
+   RESTORED PHOTO PREVIEW HINTS
+   Visual feedback for images that open the portfolio preview.
+========================================================= */
+
+.work-card[data-modal] .work-image {
+  position: relative;
+  cursor: zoom-in;
+}
+
+.work-card[data-modal] .work-image::after {
+  content: "View image ↗";
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.23);
+  border-radius: 999px;
+  background: rgba(10,7,16,.82);
+  color: #fff;
+  font: 600 10px/1.2 "DM Sans", sans-serif;
+  letter-spacing: .02em;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.work-card[data-modal]:hover .work-image::after,
+.work-card[data-modal]:focus-within .work-image::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-photo {
+  position: relative;
+  cursor: zoom-in;
+}
+
+.gallery-photo::after {
+  content: "View photo ↗";
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.23);
+  border-radius: 999px;
+  background: rgba(10,7,16,.82);
+  color: #fff;
+  font: 600 10px/1.2 "DM Sans", sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.gallery-photo:hover::after,
+.gallery-photo:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card[data-modal] .work-image::after,
+  .gallery-photo::after {
+    transition: none;
+    transform: none;
+  }
+}
