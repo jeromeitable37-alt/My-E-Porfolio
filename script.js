@@ -156,14 +156,31 @@ kindnessBtn?.addEventListener('click', () => {
   if (icon) icon.textContent = open ? '−' : '+';
 });
 
-document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const filter = btn.dataset.filter;
-  document.querySelectorAll('.work-card[data-category]').forEach(card => {
-    card.classList.toggle('is-hidden', filter !== 'all' && card.dataset.category !== filter);
+// IC Work filters: keep the selected filter visible and update every activity card.
+const filterButtons = [...document.querySelectorAll('.filter-btn')];
+const workCards = [...document.querySelectorAll('.work-card[data-category]')];
+
+function applyWorkFilter(filter) {
+  const validFilters = new Set(['all', 'reflection', 'values', 'career']);
+  const selected = validFilters.has(filter) ? filter : 'all';
+
+  filterButtons.forEach(button => {
+    const active = button.dataset.filter === selected;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
   });
-}));
+
+  workCards.forEach(card => {
+    const visible = selected === 'all' || card.dataset.category === selected;
+    card.classList.toggle('is-hidden', !visible);
+    card.setAttribute('aria-hidden', String(!visible));
+  });
+}
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => applyWorkFilter(button.dataset.filter));
+  button.setAttribute('aria-pressed', String(button.classList.contains('active')));
+});
 
 
 // Contact helpers
@@ -185,6 +202,12 @@ const contactForm = document.getElementById('contactForm');
 const contactFormStatus = document.getElementById('contactFormStatus');
 contactForm?.addEventListener('submit', async (event)=>{
   event.preventDefault();
+
+  // Set the reply-to field before creating FormData, without relying on a second script.
+  const replyToField = document.getElementById('replyToField');
+  const senderEmail = document.getElementById('contactEmail')?.value.trim() || '';
+  if (replyToField) replyToField.value = senderEmail;
+
   const submitButton = document.getElementById('sendMessage');
   if(!submitButton) return;
   submitButton.disabled = true;
