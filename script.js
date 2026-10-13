@@ -115,24 +115,22 @@ function closeMedia() {
 
 document.querySelectorAll('[data-modal]').forEach(card => {
   card.addEventListener('click', e => {
-    // Let nested links navigate normally; preview buttons and the rest of the card open the image.
-    if (e.target.closest('a')) return;
+    // Links navigate to documents. Added Quick view / Save / Share buttons have their own handlers.
+    if (e.target.closest('a, .activity-quickview, .favorite-btn, .share-activity-btn')) return;
     openMedia(card.dataset.modal);
   });
 });
-// CLICKABLE DOCUMENT CARD HANDLERS
+// Whole-card document clicks always use the visible Open activity link as the canonical target.
 document.querySelectorAll('.work-card[data-document-url]').forEach(card => {
   const openDocument = () => {
-    const url = card.dataset.documentUrl;
+    const visibleLink = card.querySelector('a.activity-document-link[href]');
+    const url = visibleLink ? visibleLink.href : card.dataset.documentUrl;
     if (url) window.open(url, '_blank', 'noopener,noreferrer');
   };
-
   card.addEventListener('click', event => {
-    // Preserve the visible "Open activity" link's normal navigation.
     if (event.target.closest('a, button')) return;
     openDocument();
   });
-
   card.addEventListener('keydown', event => {
     if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a, button')) {
       event.preventDefault();
@@ -157,31 +155,34 @@ kindnessBtn?.addEventListener('click', () => {
 });
 
 // IC Work filters: keep the selected filter visible and update every activity card.
-const filterButtons = [...document.querySelectorAll('.filter-btn')];
-const workCards = [...document.querySelectorAll('.work-card[data-category]')];
+// IC Work category filters. The enhancement layer combines these with period/subject/search.
+let activeWorkCategory = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+window.portfolioCategoryFilter = activeWorkCategory;
 
 function applyWorkFilter(filter) {
   const validFilters = new Set(['all', 'reflection', 'values', 'career']);
-  const selected = validFilters.has(filter) ? filter : 'all';
-
-  filterButtons.forEach(button => {
-    const active = button.dataset.filter === selected;
+  if (filter !== undefined) activeWorkCategory = validFilters.has(filter) ? filter : 'all';
+  window.portfolioCategoryFilter = activeWorkCategory;
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    const active = button.dataset.filter === activeWorkCategory;
     button.classList.toggle('active', active);
     button.setAttribute('aria-pressed', String(active));
   });
-
-  workCards.forEach(card => {
-    const visible = selected === 'all' || card.dataset.category === selected;
+  if (typeof window.applyPortfolioFilters === 'function') {
+    window.applyPortfolioFilters();
+    return;
+  }
+  document.querySelectorAll('.work-card[data-category]').forEach(card => {
+    const visible = activeWorkCategory === 'all' || card.dataset.category === activeWorkCategory;
     card.classList.toggle('is-hidden', !visible);
     card.setAttribute('aria-hidden', String(!visible));
   });
 }
-
-filterButtons.forEach(button => {
+window.applyWorkFilter = applyWorkFilter;
+document.querySelectorAll('.filter-btn').forEach(button => {
   button.addEventListener('click', () => applyWorkFilter(button.dataset.filter));
   button.setAttribute('aria-pressed', String(button.classList.contains('active')));
 });
-
 
 // Contact helpers
 const emailAddress = 'jeromeitable.37@gmail.com';
