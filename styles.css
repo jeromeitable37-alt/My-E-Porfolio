@@ -3159,3 +3159,22 @@ html.js-ready .reveal.visible {
   line-height: 1.5;
   letter-spacing: .01em;
 }
+
+
+/* =========================================================
+   CLICKABLE DOCUMENT CARDS
+========================================================= */
+
+.work-card[data-document-url] {
+  cursor: pointer;
+}
+
+.work-card[data-document-url]:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  box-shadow: var(--glow);
+}
+
+.work-card[data-document-url] .activity-cover {
+  cursor: pointer;
+}
